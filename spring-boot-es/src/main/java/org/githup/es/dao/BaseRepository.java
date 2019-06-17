@@ -1,10 +1,11 @@
 package org.githup.es.dao;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
@@ -66,7 +67,7 @@ public class BaseRepository {
 		if (!isIndexExist(index)) {
 			LOG.info(" 索引不存在 ！！！！！!");
 		}
-		DeleteIndexResponse diResponse = client.admin().indices().prepareDelete(index).execute().actionGet();
+		AcknowledgedResponse diResponse = client.admin().indices().prepareDelete(index).execute().actionGet();
 		if (diResponse.isAcknowledged()) {
 			LOG.info("删除索引**成功** index->>>>>>>" + index);
 		} else {

@@ -100,8 +100,8 @@ public class ESSuggestRepository extends BaseRepository{
 					.endObject()
 				.endObject();
 	
-		LOG.info(" settingsXb: " + settingsXb.string());
-		LOG.info(" mappingXb: " + mappingXb.string());
+		LOG.info(" settingsXb: " + settingsXb.toString());
+		LOG.info(" mappingXb: " + mappingXb.toString());
 		
 		//创建索引
 		CreateIndexResponse indexResponse = client.admin().indices().prepareCreate(index).setSettings(settingsXb).addMapping("tech", mappingXb).get();

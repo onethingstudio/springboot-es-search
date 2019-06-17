@@ -12,8 +12,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.NumericMetricsAggregation.SingleValue;
-import org.elasticsearch.search.aggregations.metrics.cardinality.CardinalityAggregationBuilder;
+
 import org.elasticsearch.search.collapse.CollapseBuilder;
 import org.githup.es.page.BootstrapTablePaginationVo;
 import org.githup.es.param.BasicSearchParam;

@@ -4,7 +4,8 @@ import java.net.InetAddress;
 
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+
+import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,12 +81,12 @@ public class ESConfiguration implements FactoryBean<TransportClient>, Initializi
 	public void afterPropertiesSet() throws Exception {
 		try {
 			// 配置信息
-			Settings esSetting = Settings.builder().put("cluster.name", clusterName).put("client.transport.sniff", true)// 增加嗅探机制，找到ES集群
+			Settings esSetting = Settings.builder().put("cluster.name", clusterName).put("client.transport.sniff", false)// 增加嗅探机制，找到ES集群
 					.put("thread_pool.search.size", Integer.parseInt(poolSize))// 增加线程池个数，暂时设为5
 					.build();
 
 			client = new PreBuiltTransportClient(esSetting);
-			InetSocketTransportAddress inetSocketTransportAddress = new InetSocketTransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port));
+			TransportAddress inetSocketTransportAddress = new TransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port));
 			client.addTransportAddresses(inetSocketTransportAddress);
 
 		} catch (Exception e) {

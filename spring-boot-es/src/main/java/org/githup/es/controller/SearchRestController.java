@@ -48,7 +48,7 @@ public class SearchRestController extends BaseController{
 	@RequestMapping(value = "/test")
 	public ResponseVo<?> test() throws Exception{
 		//判空
-		List<String> searchList = esSearchService.searchMessageByKeyWord("bbs_post_index", "content", "测试", 10, 0);
+		List<String> searchList = esSearchService.searchMessageByKeyWord("goods", "content", "北京", 10, 0);
 		return generateResponseVo(ESWebStatusEnum.SUCCESS, searchList);
 	}
 	
@@ -58,9 +58,7 @@ public class SearchRestController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/buildIndex")
-	public ResponseVo<?> buildIndex(
-			@RequestParam(value = "index", required = false) String index
-			) {
+	public ResponseVo<?> buildIndex(@RequestParam(value = "index", required = false) String index) {
 		//判空
 		if(index == null) {
 			return generateResponseVo(ESWebStatusEnum.FAILED, null);
@@ -115,7 +113,7 @@ public class SearchRestController extends BaseController{
 			return generateResponseVo(ESWebStatusEnum.FAILED, null);
 		}
 		//搜索具体的数据来源
-		Map<String, Object> returnMap = esSearchService.searchDataByParam("bond2018-03-15", "bond", "AWIoxzdzUfSIA3djz-ZK");
+		Map<String, Object> returnMap = esSearchService.searchDataByParam(index, type, id);
 		return generateResponseVo(ESWebStatusEnum.SUCCESS, returnMap);
 	}
 	
@@ -126,8 +124,7 @@ public class SearchRestController extends BaseController{
 	 */
 	@RequestMapping(value = "/build_suggest_index")
 	@ResponseBody
-	public ResponseVo<?> build_suggest_index(
-			) throws Exception {
+	public ResponseVo<?> build_suggest_index() throws Exception {
 		//搜索具体的数据来源
 		
 //		String index = "search_suggest_index";
@@ -145,9 +142,8 @@ public class SearchRestController extends BaseController{
 	 */
 	@RequestMapping(value = "/addDataToIndex")
 	@ResponseBody
-	public ResponseVo<?> addDataToIndexForSuggest(
-			) throws Exception {
-		String term_index = "suggest_term_index";
+	public ResponseVo<?> addDataToIndexForSuggest() throws Exception {
+		String term_index = "goods";
 		
 		//搜索具体的数据来源
 		SuggestModel data = new SuggestModel();
@@ -181,9 +177,8 @@ public class SearchRestController extends BaseController{
 	 */
 	@RequestMapping(value = "/addJSONDataDoc")
 	@ResponseBody
-	public ResponseVo<?> addJSONDataDoc(
-			) throws Exception {
-		String index = "bbs_post_index";
+	public ResponseVo<?> addJSONDataDoc() throws Exception {
+		String index = "goods";
 		
 		ModelMap map = new ModelMap();
 		map.put("collectCount", 0);
@@ -202,7 +197,7 @@ public class SearchRestController extends BaseController{
 		map.put("userId", 241);
 		map.put("valid", 1);
 		
-		String esId = esSearchService.addJSONDataDoc(index, "post", map);
+		String esId = esSearchService.addJSONDataDoc(index, "tech", map);
 		
 		return generateResponseVo(ESWebStatusEnum.SUCCESS, esId);
 	}
@@ -219,7 +214,7 @@ public class SearchRestController extends BaseController{
 		//搜索具体的数据来源
 		
 		BasicSearchParam param = new BasicSearchParam();
-		param.setIndex("bbs_post_index");
+		param.setIndex("goods");
 		param.setField("content");
 		param.setDistictField("id");
 		param.setKeyWord("压力测试");

@@ -143,7 +143,7 @@ public class ESRepository extends BaseRepository{
 								.get();
 		
 		SearchHits shList = response.getHits();
-		return shList.totalHits;
+		return shList.getTotalHits().value;
 	}
 
 	/**
@@ -513,7 +513,7 @@ public class ESRepository extends BaseRepository{
     			finalQueryBuilder = QueryBuilders.boolQuery().must(termQueryBuilder1);
     		}
     	}
-    	long count = client.prepareSearch(index).setQuery(finalQueryBuilder).get().getHits().totalHits;
+    	long count = client.prepareSearch(index).setQuery(finalQueryBuilder).get().getHits().getTotalHits().value;
     	return count;
     } 
 
